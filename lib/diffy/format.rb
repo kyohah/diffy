@@ -33,5 +33,10 @@ module Diffy
     def html
       HtmlFormatter.new(self, options.merge(:highlight_words => true)).to_s
     end
+
+    # Markdown output
+    def markdown
+      MarkdownFormatter.new(self, options).to_s
+    end
   end
 end

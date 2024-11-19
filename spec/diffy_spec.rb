@@ -657,6 +657,30 @@ describe Diffy::SplitDiff do
 </div>
       HTML
     end
+
+    it "should only highlight deletions in markdown" do
+      string1 = "lorem\nipsum\ndolor\nsit amet\n"
+      string2 = "lorem\nipsumdolor\nsit amet\n"
+      expect(Diffy::SplitDiff.new(string1, string2, :format => :markdown).left).to eq <<-MARKDOWN.chomp
+ lorem
+~-ipsum~
+~-dolor~
+*+ipsumdolor*
+ sit amet
+      MARKDOWN
+    end
+  
+    it "should correctly handle deletions in markdown with special characters" do
+      string1 = "lorem\nfoo<bar>\ndolor\nsit amet\n"
+      string2 = "lorem\nfoo\nsit amet\n"
+      expect(Diffy::SplitDiff.new(string1, string2, :format => :markdown).left).to eq <<-MARKDOWN.chomp
+ lorem
+~-foo<bar>~
+~-dolor~
+*+foo*
+ sit amet
+      MARKDOWN
+    end
   end
 
   describe "#right" do
@@ -682,6 +706,30 @@ describe Diffy::SplitDiff do
   </ul>
 </div>
       HTML
+    end
+
+    it "should only highlight insertions in markdown" do
+      string1 = "lorem\nipsum\ndolor\nsit amet\n"
+      string2 = "lorem\nipsumdolor\nsit amet\n"
+      expect(Diffy::SplitDiff.new(string1, string2, :format => :markdown).right).to eq <<-MARKDOWN.chomp
+ lorem
+~-ipsum~
+~-dolor~
+*+ipsumdolor*
+ sit amet
+      MARKDOWN
+    end
+  
+    it "should correctly handle insertions in markdown with special characters" do
+      string1 = "lorem\nfoo\nsit amet\n"
+      string2 = "lorem\nfoo<bar>\ndolor\nsit amet\n"
+      expect(Diffy::SplitDiff.new(string1, string2, :format => :markdown).right).to eq <<-MARKDOWN.chomp
+ lorem
+~-foo~
+*+foo<bar>*
+*+dolor*
+ sit amet
+      MARKDOWN
     end
   end
 end

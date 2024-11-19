@@ -32,6 +32,8 @@ module Diffy
         @diff.gsub(%r{\s+<li class="ins"><ins>(.*)</ins></li>}, '')
       when :text
         @diff.gsub(/^\+(.*)\n/, '')
+      when :markdown
+        @diff.gsub(/^\*+\s(.*)\*\n/, '')
       end
     end
 
@@ -43,6 +45,8 @@ module Diffy
         @diff.gsub(%r{\s+<li class="del"><del>(.*)</del></li>}, '')
       when :text
         @diff.gsub(/^-(.*)\n/, '')
+      when :markdown
+        @diff.gsub(/^~-\s(.*)~\n/, '')
       end
     end
   end
