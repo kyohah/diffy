@@ -16,6 +16,7 @@ It provides several built in format options which can be passed to
 * `:color`        - ANSI colorized text suitable for use in a terminal
 * `:html`         - HTML output.  Since version 2.0 this format does inline highlighting of the character changes between lines.
 * `:html_simple`  - HTML output without inline highlighting.  This may be useful in situations where high performance is required or simpler output is desired.
+* `:markdown`     - Markdown-formatted output, suitable for platforms supporting Markdown rendering (e.g., GitHub, Slack).
 
 A default format can be set like so:
 
@@ -129,6 +130,23 @@ There's some pretty nice css provided in `Diffy::CSS`.
 
 There's also a colorblind-safe version of the pallete provided in `Diffy::CSS_COLORBLIND_1`.
 
+Markdown Output
+---------------
+
+The `:markdown` format generates a diff output formatted for Markdown. This is especially useful for rendering diffs in Markdown-supported platforms such as GitHub or Slack.
+
+Example usage:
+
+```ruby
+string1 = "Hello world\nThis is a test\n"
+string2 = "Hello Markdown\nThis is a test\n"
+
+puts Diffy::Diff.new(string1, string2).to_s(:markdown)
+
+~-Hello world~
+*+Hello Markdown*
+ This is a test
+```
 
 Side-by-side comparisons
 ------------------------
