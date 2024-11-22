@@ -21,9 +21,9 @@ module Diffy
       when /^-/
         "- ~#{line.chomp[1..]}~"
       when /^ /
-        line.chomp
+        "  #{line.chomp}"
       when /^@@/
-        "`#{line.chomp}`"
+        "  `#{line.chomp}`"
       end
     end
 
