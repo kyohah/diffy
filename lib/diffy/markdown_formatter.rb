@@ -17,9 +17,9 @@ module Diffy
       when /^(---|\+\+\+|\\\\)/
         "> #{line.chomp}"
       when /^\+/
-        "*+#{line.chomp[1..]}*"
+        "+ *#{line.chomp[1..]}*"
       when /^-/
-        "~-#{line.chomp[1..]}~"
+        "- ~#{line.chomp[1..]}~"
       when /^ /
         line.chomp
       when /^@@/
